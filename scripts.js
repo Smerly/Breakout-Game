@@ -3,8 +3,8 @@ const ctx = canvas.getContext('2d');
 const ballRadius = 10;
 let x = canvas.width / 2;
 let y = canvas.height - 30;
-let dx = 1.5;
-let dy = -1.5;
+let dx = 3;
+let dy = -3;
 
 const paddleHeight = 10;
 const paddleWidth = 75;
@@ -20,6 +20,8 @@ const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
+
+let lives = 3;
 
 let score = 0;
 
@@ -73,6 +75,8 @@ function draw() {
   collisionDetection();
   // eslint-disable-next-line no-use-before-define
   drawScore();
+  // eslint-disable-next-line no-use-before-define
+  drawLives();
   x += dx;
   y += dy;
 
@@ -82,11 +86,19 @@ function draw() {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy;
     } else {
-      // eslint-disable-next-line no-alert
-      alert('GAME OVER');
-      document.location.reload();
-      // eslint-disable-next-line no-use-before-define
-      clearInterval(interval);
+      lives--;
+      if (!lives) {
+        // eslint-disable-next-line no-alert
+        alert('GAME OVER');
+        document.location.reload();
+        // eslint-disable-next-line no-use-before-define
+      } else {
+        x = canvas.width / 2;
+        y = canvas.height - 30;
+        dx = 2;
+        dy = -2;
+        paddleX = (canvas.width - paddleWidth) / 2;
+      }
     }
   }
 
@@ -105,10 +117,12 @@ function draw() {
       paddleX = 0;
     }
   }
+  requestAnimationFrame(draw);
 }
 
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
+document.addEventListener('mousemove', mouseMoveHandler, false);
 
 function keyDownHandler(e) {
   if (e.key === 'Right' || e.key === 'ArrowRight') {
@@ -144,7 +158,6 @@ function collisionDetection() {
             alert('YOU WIN, CONGRATULATIONS!');
             alert(`You have collected ${score} points!`);
             document.location.reload();
-            clearInterval(interval); // Needed for Chrome to end game
           }
         }
       }
@@ -157,7 +170,19 @@ function drawScore() {
   ctx.fillText(`Score: ${score}`, 8, 20);
 }
 
-let interval = setInterval(draw, 10);
+function mouseMoveHandler(e) {
+  let relativeX = e.clientX - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    paddleX = relativeX - paddleWidth / 2;
+  }
+}
+
+function drawLives() {
+  ctx.font = '16px Arial';
+  ctx.fillStyle = '#0095DD';
+  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
+}
+draw();
 
 //--------------------------------------------------------------------------------
 
