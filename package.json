@@ -1,0 +1,26 @@
+{
+  "name": "Breakout-Game",
+  "version": "1.0.0",
+  "description": "The classic arcade game Breakout done in Javascript",
+  "main": "scripts.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.12.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smerly/Breakout-Game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Smerly/Breakout-Game/issues"
+  },
+  "homepage": "https://github.com/Smerly/Breakout-Game#readme"
+}
