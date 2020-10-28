@@ -36,8 +36,18 @@ function draw() {
   x += dx;
   y += dy;
 
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      // eslint-disable-next-line no-alert
+      alert('GAME OVER');
+      document.location.reload();
+      // eslint-disable-next-line no-use-before-define
+      clearInterval(interval);
+    }
   }
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -76,4 +86,4 @@ function keyUpHandler(e) {
   }
 }
 
-setInterval(draw, 10);
+let interval = setInterval(draw, 10);
